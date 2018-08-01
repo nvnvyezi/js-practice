@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WebWorker</title>
+</head>
+<body>
+  <button id="button"></button>
+  <script>
+    let btn = document.getElementById('button');
+    btn.addEventListener('click', function (e) {
+      let worker = new Worker('worker.js');
+      console.log(worker)
+      worker.postMessage('123');
+      worker.onmessage = function (data) {  
+        console.log(data)
+      }
+    })
+  </script>
+</body>
+</html>
