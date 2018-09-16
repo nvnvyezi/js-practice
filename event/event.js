@@ -18,7 +18,7 @@ class EventEmeitter {
             handler[i].call(this);
           }
         }
-      } 
+      }
     } else {
       if (args.length > 0) {
           handler.apply(this, args);
