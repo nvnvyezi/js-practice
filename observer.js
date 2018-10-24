@@ -56,6 +56,7 @@ console.log(observe(test));
 console.log(test)
 test.unshift(6); // 给数组的第一个位置添加新元素时，首先遍历除首元素外的所有索引和值并存放，然后重新对各索引赋值
 console.log(observe(test)); 
+// 少一个set key 10　因为没监听的原因
 // get key: 3 val: 10
 // get key: 2 val: 3
 // get key: 1 val: 2
