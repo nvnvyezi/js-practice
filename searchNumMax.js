@@ -33,17 +33,17 @@ function searchNumMax (arr) {
       }
     }
   }
-  // console.log(Array.from(map));
+  console.log(Array.from(map));
   const arr1 = Array.from(map.values());
   const max = Math.max.apply(null, arr1);
   const res = [];
-  // console.log(max)
+  console.log(max)
   map.forEach((item, index) => {
     if (item === max) {
-      res.push(index)
+      res.push(item)
     }
   })
   console.log(res)
 }
 
-searchNumMax([2,1,3,4,5,3,4,5,5,2,1,6,6,6]);
+searchNumMax([2,1,3,4,5,3,4,5,5,2,1]);
