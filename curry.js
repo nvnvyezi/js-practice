@@ -20,3 +20,22 @@ function curry (args) {
 curry(2)(3).res();
 curry(2)(3)(4).res();
 curry(2)(3)(4)(5).res();
+
+function addCurry () {
+  let args = [];
+  function infn () {
+    args = [...args, ...arguments];
+    let sum = args.reduce((init, item) => {
+      return init + item;
+    }, 0);
+    infn.res = () => console.log(sum)
+    infn.toString = () => console.log(sum)
+    return infn;
+  }
+  return infn(...arguments);
+}
+
+curry(2, 3, 4)(5).res();
+addCurry(2, 3, 4)(5).res();
+addCurry(1)(2)(3)(4)(5).res();
+console.log(addCurry(1)(2)(3)(4)(5))
