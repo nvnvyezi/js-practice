@@ -22,6 +22,7 @@ const obj1 = shallowCopy(obj);
 obj1.like.push('sd');
 // console.log(obj1, obj);
 
+// 深拷贝
 function deepCopy (obj) {
   let arr;
   if (typeof obj === 'object') {
