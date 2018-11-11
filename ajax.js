@@ -24,3 +24,4 @@ function Ajax(params) {
   // post请求需要data
   xhr.send(data)
 }
+
