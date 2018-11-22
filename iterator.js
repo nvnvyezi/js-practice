@@ -28,9 +28,9 @@ const node1 = new Node(1);
 const node2 = new Node(2);
 const node3 = new Node(3);
 
-node1.next = node3;
-node3.next = node2;
-node2.next = node1;
+node1.next = node2;
+node2.next = node3;
+// node2.next = node1;
 
 for (const key of node1) {
   console.log(key)

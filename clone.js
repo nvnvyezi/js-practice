@@ -19,7 +19,6 @@ function shallowCopy (arr) {
 }
 
 const obj1 = shallowCopy(obj);
-obj1.like.push('sd');
 // console.log(obj1, obj);
 
 // 深拷贝
@@ -65,3 +64,51 @@ function deepCopy (obj, parent) {
 }
 
 console.log(deepCopy(obj))
+
+var a = {
+  a1: 1,
+  a2: {
+      b1: 1,
+      b2: {
+          c1: 1
+      }
+  },
+  a3: [1, 2, 3]
+}
+// a.a3 = a;
+
+let count = new Map();
+
+function deep(obj) {
+  let o = Array.isArray(obj) ? [] : {};
+  const arr = [{
+    parent: o,
+    key: undefined,
+    data: obj
+  }]
+  while (arr.length) {
+    const node = arr.shift();
+    const {parent, key, data} = node;
+    let res = parent;
+    if (typeof key !== 'undefined') {
+      res = parent[key] = {};
+    }
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const element = data[key];
+        if (typeof element === 'object') {
+          arr.push({
+            parent: res,
+            key,
+            data: element
+          })
+        } else {
+          res[key] = element;
+        }
+      }
+    }
+  }
+  return o;
+}
+
+console.log(deep(a))

@@ -13,12 +13,20 @@
  * 作为参数传递给被调用的函数。以下基本与call相同
  */
 
-Function.prototype.myCall = function (content) {
-  content = content || global;
-  content.fn = this;
+// Function.prototype.myCall = function (content) {
+//   content = content || global;
+//   content.fn = this;
+//   const args = Array.from(arguments).slice(1);
+//   const res = content.fn(...args);
+//   delete content.fn;
+//   return res;
+// }
+
+Function.prototype.myCall = function (context = global) {
+  context.fn = this;
   const args = Array.from(arguments).slice(1);
-  const res = content.fn(...args);
-  delete content.fn;
+  const res = context.fn(...args);
+  delete context.fn;
   return res;
 }
 
@@ -28,33 +36,58 @@ function test (name, clas) {
   return clas;
 }
 
-test.myCall({age: 17}, 'sds')
+// test.myCall({age: 17}, 'sds', 34)
 
-Function.prototype.myApply = function (content) {
-  content = content || global;
-  content.fn = this;
-  const res = content.fn(...arguments[1]);
-  delete content.fn;
+// Function.prototype.myApply = function (content) {
+//   content = content || global;
+//   content.fn = this;
+//   const res = content.fn(...arguments[1]);
+//   delete content.fn;
+//   return res;
+// }
+
+Function.prototype.myApply = function (context = global) {
+  if (typeof context !== 'object') {
+    context = Object(context);
+  }
+  context._fn = this;
+  const res = context._fn(...arguments[1]);
+  delete context._fn;
   return res;
 }
 
-test.myApply({age: 17}, ['sd', '12'])
+// test.myApply({age: 17}, ['sd', '12']);
+// test.myApply(Symbol(1), ['age', '12'])
+// test.apply(Symbol(1), ['age', '12'])
 
-Function.prototype.myBind = function (context) {
-  context = context || window;
-  let args = [...arguments].slice(1);
-  const self = this;
-  var P = function() {};
-  var p = function () {
+// Function.prototype.myBind = function (context) {
+//   context = context || window;
+//   let args = [...arguments].slice(1);
+//   const self = this;
+//   var P = function() {};
+//   var p = function () {
+//     args = [...args, ...arguments];
+//     return self.apply(this instanceof P ? this : context, args);
+//   }
+//   P.prototype = this.prototype;
+//   p.prototype = new P();
+//   return p;
+// }
+
+Function.prototype.myBind = function (context = global) {
+  let self = this;
+  let args = Array.from(arguments).slice(1);
+  function P() {};
+  function p () {
     args = [...args, ...arguments];
-    return self.apply(this instanceof P ? this : context, args);
+    self.apply(this instanceof P ? this : context, args);
   }
   P.prototype = this.prototype;
   p.prototype = new P();
-  return p;
 }
+
 
 const res = test.myBind({age: 17}, 'sd');
 const nres = new res();
-console.log(res('12'));
+// res('12')
 console.log(nres)
