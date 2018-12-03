@@ -30,12 +30,6 @@ Function.prototype.myCall = function (context = global) {
   return res;
 }
 
-function test (name, clas) {
-  this.name = name;
-  console.log(name, this.age, clas);
-  return clas;
-}
-
 // test.myCall({age: 17}, 'sds', 34)
 
 // Function.prototype.myApply = function (content) {
@@ -74,20 +68,33 @@ Function.prototype.myApply = function (context = global) {
 //   return p;
 // }
 
+function test (name, clas) {
+  this.name = name;
+  console.log(name, this.age, clas);
+  return clas;
+}
+
+test.prototype.say = function (params) {
+  
+}
+
+
 Function.prototype.myBind = function (context = global) {
   let self = this;
   let args = Array.from(arguments).slice(1);
   function P() {};
-  function p () {
+  return function p () {
     args = [...args, ...arguments];
-    self.apply(this instanceof P ? this : context, args);
+    // self.apply(this instanceof P ? this : context, args);
+    self.apply(context, args);
   }
   P.prototype = this.prototype;
   p.prototype = new P();
+  return p;
 }
 
 
 const res = test.myBind({age: 17}, 'sd');
 const nres = new res();
-// res('12')
+res('12')
 console.log(nres)

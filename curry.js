@@ -17,9 +17,9 @@ function curry (args) {
   return inlay(args);
 }
 
-curry(2)(3).res();
-curry(2)(3)(4).res();
-curry(2)(3)(4)(5).res();
+// curry(2)(3).res();
+// curry(2)(3)(4).res();
+// curry(2)(3)(4)(5).res();
 
 function addCurry () {
   let args = [];
@@ -27,7 +27,7 @@ function addCurry () {
     args = [...args, ...arguments];
     let sum = args.reduce((init, item) => {
       return init + item;
-    }, 0);
+    }, 0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     infn.res = () => console.log(sum)
     infn.toString = () => console.log(sum)
     return infn;
@@ -35,7 +35,19 @@ function addCurry () {
   return infn(...arguments);
 }
 
-curry(2, 3, 4)(5).res();
-addCurry(2, 3, 4)(5).res();
-addCurry(1)(2)(3)(4)(5).res();
-console.log(addCurry(1)(2)(3)(4)(5))
+function curr() {
+  let args = [...arguments];
+  return (function b() {
+    args = [...args, ...arguments];
+    b.c = args.reduce((init, item) => {
+      return init + item;
+    }, 0)
+    return b;
+  })
+}
+let a = curr(2)(3)(4)(5);
+console.log(a.c)
+// curry(2, 3, 4)(5).res();
+// addCurry(2, 3, 4)(5).res();
+// addCurry(1)(2)(3)(4)(5).res();
+// console.log(addCurry(1)(2)(3)(4)(5))

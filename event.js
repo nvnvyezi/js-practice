@@ -89,36 +89,76 @@
 
 // emitter.emit('arson', 'low-end');
 
-const events = {
-  arr: new Map(),
-  emit (name, str) {
-    if (this.arr.has(name)) {
-      const item = this.arr.get(name);
-      if (typeof item === 'function') {
-        item(str)
-      } else {
-        item.forEach(item => {
-          item(str);
-        });
-      }
-    }
-  },
-  on (name, fn) {
-    const handle = this.arr.get(name);
-    if (!handle) {
-      this.arr.set(name, fn);
-    } else if (handle && typeof handle === 'function') {
-      this.arr.set(name, [handle, fn]);
-    } else {
-      handle.push(fn);
-    }
-  }
+// const events = {
+//   arr: new Map(),
+//   emit (name, str) {
+//     if (this.arr.has(name)) {
+//       const item = this.arr.get(name);
+//       if (typeof item === 'function') {
+//         item(str)
+//       } else {
+//         item.forEach(item => {
+//           item(str);
+//         });
+//       }
+//     }
+//   },
+//   on (name, fn) {
+//     const handle = this.arr.get(name);
+//     if (!handle) {
+//       this.arr.set(name, fn);
+//     } else if (handle && typeof handle === 'function') {
+//       this.arr.set(name, [handle, fn]);
+//     } else {
+//       handle.push(fn);
+//     }
+//   }
+// }
+
+
+
+// function Event() {
+//   this.queue = new Map();
+// }
+// Event.prototype.on = function (name, fn) {
+//   let o = this.queue.get(name);
+//   if (!o) {
+//     this.queue.set(name, fn);
+//   } else if(o && typeof o === 'function') {
+//     this.queue.set(name, [o, fn]);
+//   } else {
+//     o.push(fn);
+//   }
+// }
+// Event.prototype.emit = function (name, str) {
+//   let o = this.queue.get(name);
+//   if (typeof o === 'function') {
+//     o(str);
+//   }
+//   if (typeof o === 'object') {
+//     o.forEach(element => {
+//       element(str); 
+//     });
+//   }
+// }
+
+// let events = new Event();
+// events.on('say',function(name){
+//    console.log('Hello',name)
+// });
+// events.on('say',function(name){
+//   console.log('Hello1',name)
+// });
+// events.on('sy',function(name){
+//   console.log('Hello1',name)
+// });
+// events.emit('say','Jony yu');
+
+let o = {
+    a: 1
 }
 
-events.on('say',function(name){
-   console.log('Hello',name)
-});
-events.on('say',function(name){
-  console.log('Hello1',name)
-});
-events.emit('say','Jony yu');
+let arr = [1, 2, 3];
+arr.forEach(item => {
+    console.log(item, this)
+}, o);
