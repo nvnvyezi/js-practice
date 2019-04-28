@@ -1,38 +1,72 @@
-function Node (value) {
-  this.value = value;
-  this.next = null;
+/* for-of迭代生成器 */
+
+function* generator(i) {
+  yield i;
+  yield i + 10;
 }
 
-Node.prototype[Symbol.iterator] = function () {
-  let self = this;
-  // console.log(2);
-  return {
-    next: function () {
-      if (self) {
-        const value = self.value;
-        self = self.next;
-        return {
-          value: value,
-          done: false
-        }
-      } else {
-        return {
-          done: true
-        }
-      }
-    }
+// for (const value of generator(1)) {
+//   console.log(value);
+// }
+/* 斐波那契 */
+function* fibonacci(count) {
+  let [prev, curr] = [0, 1];
+  let start = -1;
+  while (count > start) {
+    start++;
+    [prev, curr] = [curr, prev + curr];
+    yield prev;
   }
 }
 
-const node1 = new Node(1);
-const node2 = new Node(2);
-const node3 = new Node(3);
+// for (const value of fibonacci(1)) {
+//   console.log(value);
+// }
 
-node1.next = node2;
-node2.next = node3;
-// node2.next = node1;
+/* 实现迭代对象 */
+const iterable = {
+  [Symbol.iterator]() {
+    return {
+      count: 0,
+      next() {
+        if (this.count === 5) {
+          return { value: this.count, done: true };
+        }
+        return { value: this.count++, done: false };
+      }
+    };
+  }
+};
+
+// for (const value of iterable) {
+//   console.log(value);
+// }
+
+function iteratorFn(letter) {
+  this.letter = letter || "A";
+}
+
+iteratorFn.prototype[Symbol.iterator] = function() {
+  const self = this;
+  return {
+    next() {
+      if (self.letter === "F") {
+        return {
+          value: "f",
+          done: true
+        };
+      }
+      self.letter = String.fromCharCode(self.letter.charCodeAt(0) + 1);
+      return {
+        value: self.letter,
+        done: false
+      };
+    }
+  };
+};
+
+const node1 = new iteratorFn("E");
 
 for (const key of node1) {
-  console.log(key)
+  console.log(key);
 }
-// 死循环 haha

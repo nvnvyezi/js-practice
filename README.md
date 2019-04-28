@@ -1,4 +1,4 @@
-## js练习
+## js 练习
 
 [大数相加](https://github.com/nvnvyezi/js-practice/blob/master/addBigNum.js)
 
@@ -16,11 +16,11 @@
 
 [数组对象扁平化](https://github.com/nvnvyezi/js-practice/blob/master/flatten.js)
 
-[拼接URL](https://github.com/nvnvyezi/js-practice/blob/master/getParams.js)
+[拼接 URL](https://github.com/nvnvyezi/js-practice/blob/master/getParams.js)
 
-[重写iterator](https://github.com/nvnvyezi/js-practice/blob/master/iterator.js)
+[for-of/iterator](https://github.com/nvnvyezi/js-practice/blob/master/iterator.js)
 
-[call+bind+apply实现](https://github.com/nvnvyezi/js-practice/blob/master/myCall.js)
+[call+bind+apply 实现](https://github.com/nvnvyezi/js-practice/blob/master/myCall.js)
 
 [defineProperty](https://github.com/nvnvyezi/js-practice/blob/master/observer.js)
 
@@ -35,4 +35,3 @@
 [生成随机不重复数的数组](https://github.com/nvnvyezi/js-practice/blob/master/randomArr.js)
 
 [数组中次数最多的数](https://github.com/nvnvyezi/js-practice/blob/master/searchNumMax.js)
-
