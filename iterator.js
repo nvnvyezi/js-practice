@@ -67,6 +67,25 @@ iteratorFn.prototype[Symbol.iterator] = function() {
 
 const node1 = new iteratorFn("E");
 
-for (const key of node1) {
-  console.log(key);
+// for (const key of node1) {
+//   console.log(key);
+// }
+
+/* 使用迭代器遍历二维数组并转换成一维数组 */
+const arr = ["a", ["b", "c"], ["d", "e"]];
+const arr1 = ["a", ["b", ["c", ["d", "e"]]]];
+function* iterarr(arr) {
+  if (Array.isArray(arr)) {
+    for (const value of arr) {
+      yield* iterarr(value);
+    }
+  } else {
+    yield arr;
+  }
 }
+// for (const value of iterarr(arr)) {
+//   console.log(value);
+// }
+
+const res = [...iterarr(arr)];
+console.log(res);
