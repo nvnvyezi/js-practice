@@ -1,28 +1,29 @@
+/* 封装一个函数，参数是定时器的时间*/
 function sleep(ms) {
   const start = Date.now();
   const end = start + ms;
-  while (Date.now() < end) {};
-  console.log(1)
-  return ;
+  while (Date.now() < end) {}
+  console.log(`耗时${(Date.now() - start) / 1000}s`);
+  return 23;
 }
-sleep(1000);
+// sleep(1500);
 
-function sleep2(ms) {
-  return new Promise((resolve) => {
+function promiseSleep(ms) {
+  return new Promise(resolve => {
+    const start = Date.now();
     setTimeout(() => {
-      console.log(2);
-      resolve();
+      resolve(start);
     }, ms);
-  })
+  });
 }
 
-sleep2(1000).then(() => {
-  console.log(333);
-})
+// promiseSleep(1500).then(start => {
+//   console.log(`耗时${(Date.now() - start) / 1000}s`);
+// });
 
-async function sleep3(ms) {
-  await sleep(ms);
-  console.log(3333);
+async function asyncSleep(ms) {
+  const start = await promiseSleep(ms);
+  console.log(`耗时${(Date.now() - start) / 1000}s`);
 }
 
-sleep3(3000);
+asyncSleep(3000);
