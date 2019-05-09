@@ -35,3 +35,5 @@
 [生成随机不重复数的数组](https://github.com/nvnvyezi/js-practice/blob/master/randomArr.js)
 
 [数组中次数最多的数](https://github.com/nvnvyezi/js-practice/blob/master/searchNumMax.js)
+
+[阿里测评-五子棋判断输赢](https://github.com/nvnvyezi/js-practice/blob/master/gomokujudge.js)
