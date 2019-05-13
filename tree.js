@@ -3,13 +3,21 @@ function Node(data) {
   this.right = null;
   this.data = data;
 }
-let root = null;
 
-function build(t, data) {
-  // if (root === null) {
-  //   root = true;
-  //   t = new Node(data);
-  // } else {
+// 建立二叉树
+let arr = [7, 5, 9, 4, 6, 8, 10];
+const bTree = buildTree(arr);
+function buildTree(data) {
+  let tree = null;
+  if (!data || !data.length) {
+    return tree;
+  }
+  tree = new Node(data[0]);
+  for (let i = 1; i < data.length; i++) {
+    build(tree, data[i]);
+  }
+  return tree;
+  function build(t, data) {
     if (data < t.data) {
       if (t.left === null) {
         t.left = new Node(data);
@@ -23,86 +31,123 @@ function build(t, data) {
         build(t.right, data);
       }
     }
-  // }
-}
-
-const bTree = new Node(7);
-let arr = [5, 9, 4, 6, 8, 10];
-for (let i = 0; i < arr.length; i++) {
-  const element = arr[i];
-  build(bTree, element)
-}
-
-function pre(tree) {
-  if (tree !== null) {
-    console.log(tree.data);
-    pre(tree.left);
-    pre(tree.right);
   }
 }
-function preOrder(tree) {
-  let arr = [];
-  let temp;
-  temp = tree;
+
+// 递归前序
+let str = "";
+function DLR(tree) {
+  if (tree === null) {
+    return;
+  }
+  str += tree.data;
+  DLR(tree.left);
+  DLR(tree.right);
+}
+DLR(bTree);
+console.log(`递归前序: ${str}`);
+
+// 循环前序
+function loopDLR(tree, str) {
+  const arr = [];
+  let temp = tree;
   do {
     while (temp) {
-      console.log(temp.data);
+      str += temp.data;
       arr.push(temp);
       temp = temp.left;
     }
-    temp = arr.pop();
-    temp = temp.right;
+    temp = arr.pop().right;
   } while (arr.length || temp);
+  return str;
 }
-function inOrder(tree) {
-  let arr = [];
-  temp = tree;
-  // arr.push(tree);
+console.log(`循环前序: ${loopDLR(bTree, "")}`);
+
+// 递归中序
+let str1 = "";
+function LDR(node) {
+  if (!node) {
+    return;
+  }
+  LDR(node.left);
+  str1 += node.data;
+  LDR(node.right);
+}
+LDR(bTree);
+console.log(`递归中序: ${str1}`);
+
+// 循环中序
+function loopLDR(tree, str) {
+  const arr = [];
+  let temp = tree;
   do {
-    while (temp !== null) {
+    while (temp) {
       arr.push(temp);
       temp = temp.left;
     }
     temp = arr.pop();
-    console.log(temp.data);
+    str += temp.data;
     temp = temp.right;
   } while (arr.length || temp);
+  return str;
 }
-function postOrder(tree) {
-  let arr = [];
-  let temp, pre = null;
-  temp = tree;
+console.log(`循环中序: ${loopLDR(bTree, "")}`);
+
+// 递归后序
+let str2 = "";
+function LRD(node) {
+  if (!node) {
+    return;
+  }
+  LRD(node.left);
+  LRD(node.right);
+  str2 += node.data;
+}
+LRD(bTree);
+console.log(`递归后序: ${str2}`);
+
+//循环后序
+function loopLRD(tree, str) {
+  const arr = [];
+  let temp = tree,
+    pre = 0;
   do {
     while (temp) {
       arr.push(temp);
       temp = temp.left;
     }
     temp = arr[arr.length - 1];
-    if (temp.right && temp.right !== pre) {
-      temp = temp.right;
-    } else{
-      temp = arr.pop();
-      pre = temp;
-      console.log(temp.data);
+    if (!temp.right) {
+      str += temp.data;
+      pre = arr.pop();
+      temp = arr[arr.length - 1];
+      if (temp.right === pre) {
+        str += temp.data;
+        pre = arr.pop();
+        temp = arr[arr.length - 1].right;
+        if (temp === pre) {
+          str += arr[arr.length - 1].data;
+          break;
+        }
+      } else {
+        temp = temp.right;
+      }
+    } else {
       temp = temp.right;
     }
-    // temp = 
-  } while (arr.length || temp);
+  } while (arr.length);
+  return str;
 }
-function post (tree) {
-  if (tree) {
-    post(tree.left);
-    post(tree.right);
-    console.log(tree.data);
-  }
-}
-function lerverOrder(tree) {
-  let arr = [];
+console.log(`循环后序: ${loopLRD(bTree, "")}`);
+
+// 层次遍历
+function lerverLoop(tree, str) {
+  const arr = [];
   arr.push(tree);
   let temp;
   while (arr.length) {
     temp = arr.shift();
-    console.log(temp.data);
+    str += temp.data;
     if (temp.left) {
       arr.push(temp.left);
     }
@@ -110,11 +155,6 @@ function lerverOrder(tree) {
       arr.push(temp.right);
     }
   }
+  return str;
 }
-
-// inO(bTree);
-// inOrder(bTree);
-// lerverOrder(bTree);
-// preOrder(bTree)
-// postOrder(bTree)
-// post(bTree);
+console.log(`层次遍历: ${lerverLoop(bTree, "")}`);
