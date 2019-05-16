@@ -1,9 +1,32 @@
 // 双层循环
 
-const arr = [1, -1, '1', {a: 1}, {a: 1}, {a: '1'}, 2, 3, 2, [1,2], [1, 2], ['1', 2], 'sd', 'sd', /^12/, /^12/, NaN, NaN];
+const arr = [
+  1,
+  -1,
+  "1",
+  { a: 1 },
+  { a: 1 },
+  { a: "1" },
+  2,
+  3,
+  2,
+  [1, 2],
+  [1, 2],
+  ["1", 2],
+  "sd",
+  "sd",
+  /^12/,
+  /^12/,
+  NaN,
+  NaN
+];
 
-// 双层循环
-// 对象和NaN不去
+/**
+ * 双层循环
+ * 对象和NaN不去
+ * 保持原来的顺序
+ */
+
 const arr1 = [];
 for (let i = 0; i < arr.length; i++) {
   for (var j = 0; j < arr1.length; j++) {
@@ -12,11 +35,9 @@ for (let i = 0; i < arr.length; i++) {
     }
   }
   if (j === arr1.length) {
-    arr1.push(arr[i])
+    arr1.push(arr[i]);
   }
 }
-
-// console.log(arr1);
 // [ 1,
 // -1,
 // '1',
@@ -34,15 +55,17 @@ for (let i = 0; i < arr.length; i++) {
 // NaN,
 // NaN ]
 
-// indexof || includes
-// 对象和NaN
+/**
+ * indexof || includes
+ * 对象和NaN
+ * 保持原顺序
+ */
 const arr2 = [];
 for (let i = 0; i < arr.length; i++) {
   if (!arr2.includes(arr[i])) {
-    arr2.push(arr[i])
+    arr2.push(arr[i]);
   }
 }
-// console.log(arr2);
 // [ 1,
 //   -1,
 //   '1',
@@ -60,23 +83,44 @@ for (let i = 0; i < arr.length; i++) {
 //   NaN,
 //   NaN ]
 
-// filter
-// 对象不去，忽略NaN
+/**
+ * filter
+ * 对象不去，忽略NaN
+ * 保持原顺序
+ */
 const arr3 = arr.filter((item, index, arr) => {
   return arr.indexOf(item) === index;
-})
+});
+/**
+ * deduce
+ * 对象不去
+ * 保持原顺序
+ */
+const arr14 = arr.reduce((pre, cur, index) => {
+  // 忽略NaN
+  // if (arr.indexOf(cur) === index) {
+  //   pre.push(cur);
+  // }
+  //去重NaN
+  if (!pre.includes(cur)) {
+    pre.push(cur);
+  }
+  return pre;
+}, []);
 
-// console.log(arr3);
-// 全部去重
-// object键值对
+/**
+ * 全部去重
+ * object键值对
+ */
 const obj = {};
 const arr4 = arr.filter((item, index, arr) => {
-  return obj.hasOwnProperty(`${typeof item}${JSON.stringify(item)}`) ? false : obj[`${typeof item}${JSON.stringify(item)}`] = true;
-})
-// console.log(arr4)
+  return obj.hasOwnProperty(`${typeof item}${JSON.stringify(item)}`)
+    ? false
+    : (obj[`${typeof item}${JSON.stringify(item)}`] = true);
+});
 
-// es6
-// 对象不去
+/**
+ * es6
+ * 对象不去
+ */
 const arr5 = [...new Set(arr)];
-
-console.log(arr5);
