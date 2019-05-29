@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>hash</title>
+  </head>
+  <body>
+    <ul>
+      <li><a href="#/first">first</a></li>
+      <li><a href="#/second">second</a></li>
+    </ul>
+    <div id="content"></div>
+  </body>
+  <script>
+    window.addEventListener("DOMContentLoaded", onLoad, false);
+    window.onhashchange = onHashChange;
+    function onHashChange() {
+      const content = document.querySelector("#content");
+      switch (window.location.hash) {
+        case "#first":
+          content.innerHTML = "<h1>第一页</h1>";
+          break;
+        case "#second":
+          content.innerHTML = "<h1>第二页</h1>";
+          break;
+        default:
+          content.innerHTML = "Home";
+          break;
+      }
+    }
+  </script>
+</html>

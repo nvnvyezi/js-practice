@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>history</title>
+  </head>
+  <body>
+    <ul>
+      <li><a href="/first">first</a></li>
+      <li><a href="/second">second</a></li>
+    </ul>
+    <div id="content"></div>
+  </body>
+  <script>
+    /**
+     * history api
+     * back() 向后跳转
+     * forward() 向前跳转
+     * go() 载入到会话历史中的某一特定页面， 通过与当前页面相对位置来标志 (当前页面的相对位置标志为0).
+     * 您可以通过查看长度属性的值来确定的历史堆栈中页面的数量: window.history.length;
+     * pushState() replaceState() popState() https://developer.mozilla.org/zh-CN/docs/Web/API/History_API
+     */
+    window.addEventListener(
+      "DOMContentLoaded",
+      e => {
+        onHistoryChange();
+        const a = document.querySelectorAll("a[href]");
+        a.forEach(item => {
+          item.onclick = function(e) {
+            e.preventDefault();
+            const href = item.getAttribute("href");
+            window.history.pushState({ history: href }, "", href);
+            onHistoryChange();
+          };
+        });
+      },
+      false
+    );
+    window.onpopstate = onHistoryChange;
+    function onHistoryChange(e) {
+      const content = document.querySelector("#content");
+      switch (window.location.pathname) {
+        case "/first":
+          content.innerText = "first";
+          break;
+        case "/second":
+          content.innerText = "second";
+          break;
+        default:
+          content.innerText = "history home";
+          break;
+      }
+    }
+  </script>
+</html>
