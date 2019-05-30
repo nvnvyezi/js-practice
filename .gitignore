@@ -10,6 +10,9 @@ Desktop.ini
 *.egg-info
 dist
 build
+test.js
+.vscode
+promise.js
 
 # My configurations:
 */node_modules
