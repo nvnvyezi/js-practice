@@ -15,3 +15,21 @@ function curry(param) {
   }
   return inlay(param);
 }
+
+/**
+ * 实现自定义方法柯里化
+ *
+ * @param {*} fn
+ */
+function add(...rest) {
+  return rest.reduce((pre, cur) => pre + cur, 0);
+}
+function curry2(fn) {
+  let arr = [];
+  function inlay(...rest) {
+    arr = [...arr, ...rest];
+    inlay.num = fn(...arr);
+    return inlay;
+  }
+  return inlay;
+}
