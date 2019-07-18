@@ -26,11 +26,11 @@ function debounce(
     }
   };
 }
-function fn(name = "test") {
+function fun(name = "test") {
   console.log(`name: ${name}`);
 }
 let startTimer = Date.now();
-const test = debounce(fn, 2000, true);
+const test = debounce(fun, 2000, true);
 
 test();
 
