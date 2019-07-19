@@ -13,6 +13,7 @@ build
 test.js
 .vscode
 promise.js
+_promise.ts
 
 # My configurations:
 */node_modules
