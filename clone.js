@@ -1,60 +1,34 @@
-var obj = {
-  name : 'miaorenjie',
-  age: 20,
-  like: ['black', 'white'],
-};
-obj.c = obj
+function isTypeOf(obj, type) {
+  const typeMap = {
+    array: "Array",
+    object: "Object",
+    function: "Function",
+    string: "String",
+    null: "Null",
+    undefined: "Undefined",
+    boolean: "Boolean",
+    number: "Number"
+  };
+  return Object.prototype.toString.call(obj) === `[object ${typeMap[type]}]`;
+}
 
-// 浅拷贝
-function shallowCopy (arr) {
-  let res = {};
-  for (const key in arr) {
-    if (arr.hasOwnProperty(key)) {
-      res[key] = arr[key];
+/**深度优先遍历拷贝 */
+function DFSdeepClone(param, visitList = []) {
+  if (isTypeOf(param, "function")) {
+    return eval(`(${param.toString()})`);
+  }
+  if (!isTypeOf(param, "array") && !isTypeOf(param, "object")) {
+    return param;
+  }
+  if (visitList.includes(param)) {
+    return visitList[visitList.indexOf(param)];
+  }
+  visitList.push(param);
+  let res = isTypeOf(param, "array") ? [] : {};
+  for (const key in param) {
+    if (param.hasOwnProperty(key)) {
+      res[key] = DFSdeepClone(param[key], visitList);
     }
   }
   return res;
 }
-
-const obj1 = shallowCopy(obj);
-// console.log(obj1, obj);
-
-// 深拷贝
-function deepCopy (obj) {
-  let arr;
-  if (typeof obj !== 'object') {
-    return obj
-  }
-  arr = Array.isArray(obj) ? [] : {};
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      arr[key] = deepCopy(obj[key]);
-    }
-  }
-  return arr;
-}
-
-// const obj2 = deepCopy(obj)
-// console.log(obj2, obj)
-
-// 循环引用
-const memory = new Map()
-function deepCopy2(param) {
-  if (typeof param !== 'object') {
-    return param
-  }
-  const arr = Array.isArray(param) ? [] : {}
-  const res = memory.get(param)
-  if (res) {
-    return res
-  }
-  memory.set(param, param)
-  for (const key in param) {
-    if (param.hasOwnProperty(key)) {
-      const item = param[key];
-      arr[key] = deepCopy2(item)
-    }
-  }
-  return arr
-}
-console.log(deepCopy2(obj))
