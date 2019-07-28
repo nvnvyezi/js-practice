@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>拖拽</title>
+    <style>
+      div {
+        box-sizing: border-box;
+      }
+      .out {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: 100px auto;
+        border: 1px solid red;
+      }
+      .in {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        color: aliceblue;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="out">
+      <div class="in">drag</div>
+    </div>
+  </body>
+  <script>
+    const out = document.documentElement.querySelector(".out");
+    const inDiv = document.documentElement.querySelector(".in");
+    inDiv.onmousedown = function(e) {
+      let startX = e.clientX - inDiv.offsetLeft;
+      let startY = e.clientY - inDiv.offsetTop;
+      inDiv.onmousemove = function mousemove(e) {
+        let moveX = e.clientX - startX;
+        let moveY = e.clientY - startY;
+        if (moveX < 0) {
+          moveX = 0;
+        }
+        if (moveX > out.offsetWidth - inDiv.offsetWidth) {
+          moveX = out.offsetWidth - inDiv.offsetWidth;
+        }
+        if (moveY < 0) {
+          moveY = 0;
+        }
+        if (moveY > out.offsetWidth - inDiv.offsetWidth) {
+          moveY = out.offsetWidth - inDiv.offsetWidth;
+        }
+        inDiv.style.left = `${moveX}px`;
+        inDiv.style.top = `${moveY}px`;
+      };
+      inDiv.onmouseup = function mouseup(e) {
+        this.onmousemove = null;
+        this.onmouseup = null;
+      };
+    };
+  </script>
+</html>
