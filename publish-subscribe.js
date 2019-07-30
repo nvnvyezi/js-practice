@@ -8,25 +8,27 @@ class EventEmitter {
     this._observers = new Map();
   }
   on(name, fn) {
-    let handle = this._observers.get(name);
+    let handle = Reflect.get(this._observers, name);
     if (!handle) {
       handle = [fn];
     } else {
       handle.push(fn);
     }
-    this._observers.set(name, handle);
+    Reflect.set(this._observers, name, handle);
   }
   emit(name, ...rest) {
-    const handles = this._observers.get(name);
+    const handles = Reflect.get(this._observers, name);
+
     handles.forEach(handle => {
       if (typeof handle !== "function") {
         throw new TypeError("no function");
       }
-      handle.apply(this, rest);
+      Reflect.apply(handle, this, rest);
     });
   }
   remove(name, fn) {
-    const handles = this._observers.get(name);
+    const handles = Reflect.get(this._observers, name);
+
     handles.forEach((handle, index) => {
       if (fn === handle || fn.toString() === handle.toString()) {
         handles.splice(index, 1);
