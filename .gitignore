@@ -10,11 +10,12 @@ Desktop.ini
 *.egg-info
 dist
 build
-test.js
+test.*
 .vscode
 promise.js
 _promise.ts
 event.js
+mvvm
 
 # My configurations:
 */node_modules
