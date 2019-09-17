@@ -18,5 +18,8 @@ event.js
 mvvm
 
 # My configurations:
-*/node_modules
+node_modules
 
+yarn.lock
+
+package.json
